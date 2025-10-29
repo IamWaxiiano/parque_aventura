@@ -29,7 +29,12 @@
                         <p class="card-text">Fecha de visita: {{visita.fecha_visita}}</p>
                         <p class="card-text">Rating {{visita.rating}}</p>
                         <p class="card-text">Detalles: {{visita.detalles}}</p>
-                        <p class="card-text">Me gusta: {{likes}}</p>
+                        <p class="card-text">Me gusta: {%if cant_likes%}
+                            {{cant_likes}}
+                            {%else %}
+                            0
+                            {%endif%}
+                        </p>
                         <form action="/like" method="post">
                             <input type="hidden" value="{{visita.id}}" name="visitas_id">
                             <input type="hidden" value="{{visita.usuarios_id}}" name="usuarios_id">

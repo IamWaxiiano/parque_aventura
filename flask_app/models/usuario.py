@@ -47,6 +47,6 @@ class Usuario:
     @classmethod
     def get_name(cls,datos):
         query="SELECT * from usuarios where id=%(id)s"
-        data={"id": datos["id"]}
+        data={"id": datos["usuarios_id"]}
         usuario= Conexion('parque_db').query_db(query, data)
         return usuario[0]["nombre"] if usuario else None

@@ -20,7 +20,7 @@ class Visita:
         visitas_en_bd=Conexion('parque_db').query_db(query)
         visitas=[]
         for visita in visitas_en_bd:
-            visitas.append(cls(visita))
+            visitas.append(visita)
         return visitas
     
     @classmethod

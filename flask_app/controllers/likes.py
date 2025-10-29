@@ -7,11 +7,11 @@ from flask import Blueprint
 
 likes_bp = Blueprint("likes", __name__)
 
-@likes_bp.route("/like")
+@likes_bp.route("/like", methods=["POST"])
 def like():
     datos = {
         "visitas_id": request.form["visitas_id"],
         "usuarios_id": request.form["usuarios_id"]
     }
     Like.save(datos)
-    return redirect("/dashboard")
+    return redirect("/ver")

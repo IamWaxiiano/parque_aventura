@@ -8,7 +8,7 @@ from flask import Blueprint
 visitas_bp = Blueprint("visitas", __name__)
 
 def ordenar(e):
-    return e.rating
+    return e["rating"]
 
 @visitas_bp.route("/dashboard")
 def dashboard():
@@ -20,9 +20,7 @@ def dashboard():
         listado.sort(key=ordenar, reverse=True)
         usuario_v=[]
         for visita in listado:
-            visita.nombre_usuario=Usuario.get_name({"id": visita.usuarios_id})
-            print(visita.nombre_usuario)
-            if visita.usuarios_id==session["id"]:
+            if visita["usuarios_id"]==session["id"]:
                 listado.remove(visita)
                 usuario_v.append(visita)
         return render_template('visitas.html',visitas=listado, usuario_v=usuario_v)
@@ -55,9 +53,10 @@ def ver(id):
         return redirect("/")
     else:
         visita= Visita.get_one(id)
-        visita[0]["nombre_usuario"]=Usuario.get_name({"id": visita[0]["usuarios_id"]})
+        visita[0]["nombre_usuario"]=Usuario.get_name(visita[0])
+        likes=Like.get_all_visita(visita[0]["id"])
         
-        return render_template("ver.html", visita=visita[0])
+        return render_template("ver.html", visita=visita[0], cant_likes=len(likes))
     
 @visitas_bp.route("/editar/<int:id>")
 def editar(id):

@@ -31,7 +31,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="fecha_visita" class="form-label">Fecha de Visita</label>
-                        <input type="date" class="form-control" id="fecha_visita" name="fecha_visita" required>
+                        <input type="date" class="form-control" id="fecha_visita" name="fecha_visita" required max="">
                     </div>
                     <div class="mb-3">
                         <label for="rating" class="form-label">Rating</label>
@@ -46,6 +46,10 @@
             </div>
         </div>
     </div>
+    <script>
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById("fecha_visita").setAttribute("max", today)
+    </script>
 </body>
 
 </html>

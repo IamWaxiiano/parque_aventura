@@ -18,5 +18,5 @@ class Like:
         likes_en_bd=Conexion('parque_db').query_db(query, data)
         likes=[]
         for like in likes_en_bd:
-            likes.append(cls(like))
+            likes.append(like)
         return likes
