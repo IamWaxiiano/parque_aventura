@@ -28,3 +28,14 @@ class Visita:
         query = "SELECT * FROM visitas WHERE id = %(id)s;"
         data={"id": id}
         return Conexion('parque_db').query_db(query, data)
+    
+    @classmethod 
+    def update(cls, data):
+        query = "UPDATE visitas SET parque=%(parque)s, fecha_visita=%(fecha_visita)s, rating=%(rating)s, detalles=%(detalles)s WHERE id = %(id)s;"
+        return Conexion('parque_db').query_db(query,data)
+    
+    @classmethod
+    def delete(cls, id):
+        query = "DELETE FROM visitas WHERE id = %(id)s;"
+        data={"id": id}
+        return Conexion('parque_db').query_db(query, data)

@@ -14,6 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
+                <h1>Editar Visita</h1>
                 <ul class="nav justify-content-end">
                     <li class="nav-item">
                         <a href="/dashboard" class="nav-link">Inicio</a>
@@ -22,26 +23,25 @@
                         <a href="/logout" class="nav-link">Cerrar sesión</a>
                     </li>
                 </ul>
-                <h1>Registrar Visita</h1>
-                <form action="/crear_visita" method="post">
-                    <input type="hidden" name="usuarios_id" value="{{session.id}}">
+                <form action="/editar_visita" method="post">
+                    <input type="hidden" name="id" value="{{visita.id}}">
                     <div class="mb-3">
                         <label for="parque" class="form-label">Parque</label>
-                        <input type="text" class="form-control" id="parque" name="parque" required>
+                        <input type="text" class="form-control" id="parque" name="parque" required value="{{visita.parque}}">
                     </div>
                     <div class="mb-3">
                         <label for="fecha_visita" class="form-label">Fecha de Visita</label>
-                        <input type="date" class="form-control" id="fecha_visita" name="fecha_visita" required>
+                        <input type="date" class="form-control" id="fecha_visita" name="fecha_visita" required value="{{visita.fecha_visita}}">
                     </div>
                     <div class="mb-3">
                         <label for="rating" class="form-label">Rating</label>
-                        <input type="number" class="form-control" id="rating" name="rating" required min="1" max="5">
+                        <input type="number" class="form-control" id="rating" name="rating" required min="1" max="5" value="{{visita.rating}}">
                     </div>
                     <div class="mb-3">
                         <label for="detalles" class="form-label">Detalles</label>
-                        <textarea type="text" class="form-control" id="detalles" name="detalles" rows="3" required></textarea>
+                        <textarea type="text" class="form-control" id="detalles" name="detalles" rows="3" required>{{visita.detalles}}</textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
                 </form>
             </div>
         </div>

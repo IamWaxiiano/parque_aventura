@@ -24,6 +24,7 @@
                     </li>
                 </ul>
                 </table>
+                <h2>Mis visitas</h2>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -41,8 +42,8 @@
                             <td>{{ visita.fecha_visita }} </td>
                             <td>
                                 <a href="/ver/{{visita.id}}" class="btn btn-primary">Ver</a>
-                                <a class="btn btn-success">Editar</a>
-                                <a class="btn btn-warning" href="">Borrar</a>
+                                <a href="/editar/{{visita.id}}" class="btn btn-success">Editar</a>
+                                <a class="btn btn-danger" href="/borrar/{{visita.id}}" onclick="confirmar()">Borrar</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -51,6 +52,7 @@
                 
             </div>
             <div class="col-12">
+                <h2>Otras visitas</h2>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -76,6 +78,13 @@
                     </tbody>
             </div>
         </div>
+        <script>
+            function confirmar() {
+                if (!confirm("¿Estas seguro que quieres borrar este registro?")) {
+                    event.preventDefault()
+                } 
+                }
+        </script>
 </body>
 
 </html>

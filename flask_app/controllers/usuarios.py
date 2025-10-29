@@ -43,22 +43,6 @@ def login():
         session["password"]=datos["password"]
         session["id"]=usuario["id"]
         return redirect("/dashboard")
-    
-@usuarios_bp.route("/dashboard")
-def dashboard():
-    if "id" not in session:
-        flash("Debes iniciar sesión primero")
-        return redirect("/")
-    else:
-        listado=Visita.get_all()
-        usuario_v=[]
-        print(listado)
-        for visita in listado:
-            visita.nombre_usuario=Usuario.get_name({"id": visita.usuarios_id})
-            if visita.usuarios_id==session["id"]:
-                listado.remove(visita)
-                usuario_v.append(visita)
-        return render_template('visitas.html',visitas=listado, usuario_v=usuario_v)
 
 @usuarios_bp.route("/logout")
 def logout():
