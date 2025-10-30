@@ -24,7 +24,9 @@
                     </li>
                 </ul>
                 </table>
+                
                 <h2>Mis visitas</h2>
+                {%if usuario_v%}
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -49,10 +51,13 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                
+                {%else%}
+                <p>No tienes Visitas</p>
+                {%endif%}
             </div>
             <div class="col-12">
                 <h2>Otras visitas</h2>
+                {%if visitas%}
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -76,6 +81,9 @@
                         </tr>
                         {% endfor %}
                     </tbody>
+                    {%else%}
+                        <p>No hay otras visitas</p>
+                    {%endif%}
             </div>
         </div>
         <script>

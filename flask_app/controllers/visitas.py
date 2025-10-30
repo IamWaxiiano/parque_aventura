@@ -20,11 +20,15 @@ def dashboard():
         return redirect("/")
     else:
         listado = Visita.get_all()
-
-        
         session_id = int(session.get("id"))
-        usuario_v = [v for v in listado if session_id is not None and int(v.get("usuarios_id")) == session_id]
-        otras_visitas = [v for v in listado if not (session_id is not None and int(v.get("usuarios_id")) == session_id)]
+        otras_visitas=[]
+        usuario_v=[]
+
+        for visita in listado:
+            if visita["usuarios_id"]==session_id:
+                usuario_v.append(visita)
+            else:
+                otras_visitas.append(visita)
 
         otras_visitas.sort(key=ordenar, reverse=True)
         usuario_v.sort(key=ordenar, reverse=True)
@@ -47,8 +51,21 @@ def crear_visita():
         "detalles": request.form["detalles"],
         "usuarios_id": request.form["usuarios_id"]
     }
-    Visita.save(datos)
-    return redirect("/dashboard")
+    visitas=Visita.ValidarParque(datos["usuarios_id"])
+    existe=False
+    if visitas:
+        for visita in visitas:
+            if visita["parque"]==datos["parque"]:
+                existe=True
+        if existe == True:
+            flash("El parque ya esta registrado en por el usuario")
+            return redirect("/nueva")
+        else:
+            Visita.save(datos)
+            return redirect("/dashboard")
+    else: 
+        Visita.save(datos)
+        return redirect("/dashboard")
 
 
 @visitas_bp.route("/ver/<int:id>")
@@ -80,9 +97,11 @@ def actualizar():
         "rating": request.form["rating"],
         "fecha_visita": request.form["fecha_visita"],
         "detalles": request.form["detalles"],
+        "usuarios_id": request.form["usuarios_id"]
     }
     Visita.update(datos)
     return redirect("/dashboard")
+    
 
 @visitas_bp.route("/borrar/<int:id>")
 def borrar(id):

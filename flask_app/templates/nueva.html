@@ -11,6 +11,16 @@
 </head>
 
 <body>
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                <li style="color: red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        {% block body %}{% endblock %}
     <div class="container">
         <div class="row">
             <div class="col-md-5">
@@ -26,19 +36,19 @@
                 <form action="/crear_visita" method="post">
                     <input type="hidden" name="usuarios_id" value="{{session.id}}">
                     <div class="mb-3">
-                        <label for="parque" class="form-label">Parque</label>
+                        <label for="parque" class="form-label">Parque:</label>
                         <input type="text" class="form-control" id="parque" name="parque" required>
                     </div>
                     <div class="mb-3">
-                        <label for="fecha_visita" class="form-label">Fecha de Visita</label>
+                        <label for="fecha_visita" class="form-label">Fecha de Visita:</label>
                         <input type="date" class="form-control" id="fecha_visita" name="fecha_visita" required max="">
                     </div>
                     <div class="mb-3">
-                        <label for="rating" class="form-label">Rating</label>
+                        <label for="rating" class="form-label">Rating:</label>
                         <input type="number" class="form-control" id="rating" name="rating" required min="1" max="5">
                     </div>
                     <div class="mb-3">
-                        <label for="detalles" class="form-label">Detalles</label>
+                        <label for="detalles" class="form-label">Detalles:</label>
                         <textarea type="text" class="form-control" id="detalles" name="detalles" rows="3" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Registrar</button>

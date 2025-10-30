@@ -40,3 +40,9 @@ class Visita:
         query = "DELETE FROM visitas WHERE id = %(id)s;"
         data={"id": id}
         return Conexion('parque_db').query_db(query, data)
+    
+    def ValidarParque(id_usuario):
+        query= "SELECT * from visitas where usuarios_id=%(usuarios_id)s"
+        data = {"usuarios_id": id_usuario}
+        visitas=Conexion('parque_db').query_db(query, data)
+        return visitas if visitas else None

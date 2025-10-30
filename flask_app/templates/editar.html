@@ -12,6 +12,16 @@
 
 <body>
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                <li style="color: red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        {% block body %}{% endblock %}
         <div class="row">
             <div class="col-md-5">
                 <h1>Editar Visita</h1>
@@ -25,20 +35,21 @@
                 </ul>
                 <form action="/editar_visita" method="post">
                     <input type="hidden" name="id" value="{{visita.id}}">
+                    <input type="hidden" name="usuarios_id" value="{{session.id}}">
                     <div class="mb-3">
-                        <label for="parque" class="form-label">Parque</label>
-                        <input type="text" class="form-control" id="parque" name="parque" required value="{{visita.parque}}">
+                        <label for="parque" class="form-label">Parque:</label>
+                        <h2 id="parque">{{visita.parque}}</h2>
                     </div>
                     <div class="mb-3">
-                        <label for="fecha_visita" class="form-label">Fecha de Visita</label>
+                        <label for="fecha_visita" class="form-label">Fecha de Visita:</label>
                         <input type="date" class="form-control" id="fecha_visita" name="fecha_visita" required value="{{visita.fecha_visita}}" max="">
                     </div>
                     <div class="mb-3">
-                        <label for="rating" class="form-label">Rating</label>
+                        <label for="rating" class="form-label">Rating:</label>
                         <input type="number" class="form-control" id="rating" name="rating" required min="1" max="5" value="{{visita.rating}}">
                     </div>
                     <div class="mb-3">
-                        <label for="detalles" class="form-label">Detalles</label>
+                        <label for="detalles" class="form-label">Detalles:</label>
                         <textarea type="text" class="form-control" id="detalles" name="detalles" rows="3" required>{{visita.detalles}}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
