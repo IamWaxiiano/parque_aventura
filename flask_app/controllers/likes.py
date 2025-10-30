@@ -9,13 +9,17 @@ likes_bp = Blueprint("likes", __name__)
 
 @likes_bp.route("/like-post/<int:id_visita>")
 def like(id_visita):
-    visita= Visita.get_one(id_visita)
-    if not visita:
-        flash("La visita no existe")
+    if "id" not in session:
+        flash("Debes iniciar sesión primero")
+        return redirect("/")
     else:
-        datos={
-            "usuarios_id": session["id"],
-            "visitas_id": id_visita
-        }
-        like=Like.save(datos)
-    return redirect(f"/ver/{id_visita}")
+        visita= Visita.get_one(id_visita)
+        if not visita:
+            flash("La visita no existe")
+        else:
+            datos={
+                "usuarios_id": session["id"],
+                "visitas_id": id_visita
+            }
+            like=Like.save(datos)
+        return redirect(f"/ver/{id_visita}")

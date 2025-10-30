@@ -39,7 +39,7 @@ def nueva():
         return render_template("nueva.html")
     
 @visitas_bp.route("/crear_visita", methods=["POST"])
-def crear_peli():
+def crear_visita():
     datos = {
         "parque":request.form["parque"],
         "rating": request.form["rating"],
