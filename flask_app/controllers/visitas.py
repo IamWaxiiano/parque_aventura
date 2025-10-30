@@ -8,7 +8,10 @@ from flask import Blueprint
 visitas_bp = Blueprint("visitas", __name__)
 
 def ordenar(e):
-    return e["rating"]
+    try:
+        return int(e["rating"])
+    except Exception:
+        return 0
 
 @visitas_bp.route("/dashboard")
 def dashboard():
@@ -16,14 +19,16 @@ def dashboard():
         flash("Debes iniciar sesión primero")
         return redirect("/")
     else:
-        listado=Visita.get_all()
-        listado.sort(key=ordenar, reverse=True)
-        usuario_v=[]
-        for visita in listado:
-            if visita["usuarios_id"]==session["id"]:
-                listado.remove(visita)
-                usuario_v.append(visita)
-        return render_template('visitas.html',visitas=listado, usuario_v=usuario_v)
+        listado = Visita.get_all()
+
+        
+        session_id = int(session.get("id"))
+        usuario_v = [v for v in listado if session_id is not None and int(v.get("usuarios_id")) == session_id]
+        otras_visitas = [v for v in listado if not (session_id is not None and int(v.get("usuarios_id")) == session_id)]
+
+        otras_visitas.sort(key=ordenar, reverse=True)
+        usuario_v.sort(key=ordenar, reverse=True)
+        return render_template('visitas.html', visitas=otras_visitas, usuario_v=usuario_v)
 
 @visitas_bp.route("/nueva")
 def nueva():
@@ -55,8 +60,8 @@ def ver(id):
         visita= Visita.get_one(id)
         visita[0]["nombre_usuario"]=Usuario.get_name(visita[0])
         likes=Like.get_all_visita(visita[0]["id"])
-        
-        return render_template("ver.html", visita=visita[0], cant_likes=len(likes))
+        print(likes)
+        return render_template("ver.html", visita=visita[0], likes=likes, session_id=session.get("id"))
     
 @visitas_bp.route("/editar/<int:id>")
 def editar(id):

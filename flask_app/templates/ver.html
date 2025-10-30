@@ -3,49 +3,53 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Ver Visita</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a href="/dashboard" class="nav-link">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/logout" class="nav-link">Cerrar sesión</a>
-                    </li>
-                </ul>
-                <div class="card" style="width: 50rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{visita.parque}}</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Visitado por: {{visita.nombre_usuario}}</h6>
-                        <p class="card-text">Fecha de visita: {{visita.fecha_visita}}</p>
-                        <p class="card-text">Rating {{visita.rating}}</p>
-                        <p class="card-text">Detalles: {{visita.detalles}}</p>
-                        <p class="card-text">Me gusta: {%if cant_likes%}
-                            {{cant_likes}}
-                            {%else %}
-                            0
-                            {%endif%}
-                        </p>
-                        <form action="/like" method="post">
-                            <input type="hidden" value="{{visita.id}}" name="visitas_id">
-                            <input type="hidden" value="{{visita.usuarios_id}}" name="usuarios_id">
-                            <button>Me Gusta</button>
-                        </form>
-                        
-                    </div>
-                </div>
+
+    <div class="container mt-5">
+        <div class="alert alert-success display-1">{{visita.parque}}</div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td class="fw-bold">Publicado por</td>
+                        <td>{{visita.nombre_usuario}}</td>
+                    </tr>
+                    <td class="fw-bold">Rating</td>
+                    <td>
+                        ({{visita.rating}}/5)
+                    </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Fecha de Visita</td>
+                        <td>{{visita.fecha_visita}}</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Descripción</td>
+                        <td>{{visita.detalles}}</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Likes</td>
+                        <td>{{likes|length}}
+                            {% if session_id in likes|map(attribute="usuarios_id")|list %}
+
+                            {% else %}
+                                <a href="/like-post/{{visita.id}}" class="btn btn-success rounded-circle"><i
+                                    class="bi bi-hand-thumbs-up"></i></a>
+                            {% endif %} 
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                </table>
             </div>
-
-
         </div>
 </body>
 

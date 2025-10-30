@@ -7,11 +7,15 @@ from flask import Blueprint
 
 likes_bp = Blueprint("likes", __name__)
 
-@likes_bp.route("/like", methods=["POST"])
-def like():
-    datos = {
-        "visitas_id": request.form["visitas_id"],
-        "usuarios_id": request.form["usuarios_id"]
-    }
-    Like.save(datos)
-    return redirect("/ver")
+@likes_bp.route("/like-post/<int:id_visita>")
+def like(id_visita):
+    visita= Visita.get_one(id_visita)
+    if not visita:
+        flash("La visita no existe")
+    else:
+        datos={
+            "usuarios_id": session["id"],
+            "visitas_id": id_visita
+        }
+        like=Like.save(datos)
+    return redirect(f"/ver/{id_visita}")

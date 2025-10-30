@@ -16,12 +16,13 @@ class Visita:
     
     @classmethod
     def get_all(cls):
-        query= "SELECT * from visitas"
-        visitas_en_bd=Conexion('parque_db').query_db(query)
-        visitas=[]
-        for visita in visitas_en_bd:
-            visitas.append(visita)
-        return visitas
+        query = """
+            SELECT v.*, u.nombre AS nombre_usuario, u.apellido AS apellido_usuario
+            FROM visitas v
+            LEFT JOIN usuarios u ON v.usuarios_id = u.id;
+        """
+        visitas_en_bd = Conexion('parque_db').query_db(query)
+        return visitas_en_bd
     
     @classmethod
     def get_one(cls, id):

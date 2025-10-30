@@ -13,7 +13,7 @@ class Like:
     
     @classmethod
     def get_all_visita(cls, id):
-        query= "SELECT * from visitas WHERE id=%(visitas_id)s"
+        query= "SELECT * from likes WHERE visitas_id=%(visitas_id)s"
         data={"visitas_id": id}
         likes_en_bd=Conexion('parque_db').query_db(query, data)
         likes=[]
