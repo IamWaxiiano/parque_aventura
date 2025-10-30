@@ -36,7 +36,8 @@ def login():
     }
     usuario=Usuario.login(datos)
     if usuario is None:
-        render_template("error.html")
+        flash("Email o contraseña incorrectos")
+        return redirect(request.referrer)
     else:
         session["nombre"]=usuario["nombre"]
         session["apellido"]=usuario["apellido"]
